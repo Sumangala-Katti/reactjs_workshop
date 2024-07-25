@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 }
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grid-item {
+  margin: 10px;
+  width: calc(33.333% - 20px);
+}
+
+.grid-item img {
+  width: 100%;
+  height: auto;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+}
+

@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    font-family: 'Titillium Web', sans-serif;
+    background-color: #171717;
+    color: #FFFFFF;
+  }
+  
+  .app {
+    padding: 10px;
+  }
+  
+  .search-bar {
+    margin-bottom: 20px;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #FFFFFF;
+    background-color: #333333;
+    color: #FFFFFF;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  
+  .grid-item {
+    background-color: #333333;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .grid-item img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 3;
+    display: block;
+  }
+  
+  .title {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  .loading, .error {
+    text-align: center;
+    color: #FFFFFF;
+    margin-top: 20px;
+  }
+  
