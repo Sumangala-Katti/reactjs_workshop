@@ -1,70 +1,62 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import './App.css';
 import Grid from './components/Grid';
-import SearchBar from './components/SearchBar';
-import './assests/styles.css';
 
 const App = () => {
   const [data, setData] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const result = await axios.get(`https://test.create.diagnal.com/data/page${page}.json`);
-        console.log('API Response:', result.data);
-        const content = result.data?.page?.['content-items']?.content || [];
-        console.log('Fetched Data:', content);
-        if (Array.isArray(content)) {
-          setData(prevData => [...prevData, ...content]);
-        } else {
-          throw new Error('Fetched data is not an array');
-        }
-      } catch (err) {
-        if (err.response && err.response.status === 403) {
-          console.warn(`Access to page ${page} is forbidden.`);
-          setError(`Page ${page} is not accessible.`);
-          setPage(prevPage => Math.max(prevPage - 1, 1));
-        } else {
-          console.error('Error fetching data:', err.response ? err.response.data : err.message);
-          setError('Error fetching data');
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    fetchData();
+    fetchData(page);
   }, [page]);
 
-  const handleScroll = () => {
-    console.log('Error state:', error);
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight && !loading && !(error && error.includes('forbidden'))) {
-      setPage(prevPage => prevPage + 1);
+  const fetchData = async (pageNum) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`https://test.create.diagnal.com/data/page${pageNum}.json`);
+      const result = await response.json();
+      setData((prevData) => [...prevData, ...result.page['content-items'].content]);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+    setLoading(false);
+  };
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredData = data.filter((item) =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleScroll = (event) => {
+    const bottom =
+      event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight;
+    if (bottom) {
+      setPage((prevPage) => prevPage + 1);
     }
   };
-  
-  
-  
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [loading]);
-
-  const filteredData = data.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
-    <div className="app">
-      <SearchBar setSearchQuery={setSearchQuery} />
-      {error && <div className="error">{error}</div>}
-      <Grid data={filteredData} />
-      {loading && <div className="loading">Loading...</div>}
+    <div className="app-container" onScroll={handleScroll}>
+      <div className="header">
+        <img src="https://test.create.diagnal.com/images/Back.png" alt="Back" className="icon" />
+        <h1>Romantic Comedy</h1>
+        <div className="search-container">
+          <img src="https://test.create.diagnal.com/images/search.png" alt="Search" className="icon" />
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={handleSearch}
+            className="search-input"
+          />
+        </div>
+      </div>
+      <Grid data={filteredData} loading={loading} />
     </div>
   );
 };

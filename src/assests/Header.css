@@ -1,0 +1,47 @@
+/* Header.css */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    /* background-color: #f8f8f8; */
+    /* border-bottom: 1px solid #ddd; */
+  }
+  
+  .header-title {
+    display: flex;
+    align-items: center;
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 1rem;
+  }
+  
+  .header-title h1 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .search-icon {
+    margin-left: 0.5rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  

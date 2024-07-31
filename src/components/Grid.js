@@ -1,14 +1,18 @@
 import React from 'react';
+import '../assests/Grid.css';
+import GridItem from './GridItem';
 
-const Grid = ({ data }) => {
+const Grid = ({ data, loading }) => {
   return (
-    <div className="grid">
+    <div className="grid-container">
       {data.map((item, index) => (
-        <div className="grid-item" key={index}>
-          <img src={`https://test.create.diagnal.com/images/${item['poster-image']}`} alt={item.name} />
-          <div className="title">{item.name}</div>
-        </div>
+        <GridItem key={index} item={item} />
       ))}
+      {loading && (
+        <div className="loading-container">
+          <img src="https://test.create.diagnal.com/images/placeholder_for_missing_posters.png" alt="Loading" className="loading-placeholder" />
+        </div>
+      )}
     </div>
   );
 };
